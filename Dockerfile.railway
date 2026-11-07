@@ -1,0 +1,30 @@
+FROM alpine:3.19
+
+ARG PB_VERSION=0.36.8
+
+RUN apk add --no-cache curl unzip ca-certificates wget
+
+# Detect architecture and download PocketBase binary
+RUN ARCH=$(uname -m) && \
+    if [ "$ARCH" = "x86_64" ]; then PB_ARCH="amd64"; \
+    elif [ "$ARCH" = "aarch64" ]; then PB_ARCH="arm64"; \
+    else PB_ARCH="amd64"; fi && \
+    curl -fsSL --retry 5 --retry-all-errors --retry-delay 3 \
+      "https://github.com/pocketbase/pocketbase/releases/download/v${PB_VERSION}/pocketbase_${PB_VERSION}_linux_${PB_ARCH}.zip" \
+      -o /tmp/pocketbase.zip && \
+    unzip /tmp/pocketbase.zip -d /tmp/pb && \
+    chmod +x /tmp/pb/pocketbase && \
+    mv /tmp/pb/pocketbase /usr/local/bin/pocketbase && \
+    rm -rf /tmp/pocketbase.zip /tmp/pb
+
+WORKDIR /app
+
+COPY pb_migrations/ ./pb_migrations/
+COPY pb_hooks/ ./pb_hooks/
+
+RUN mkdir -p /app/pb_data
+
+ENV PORT=8090
+EXPOSE 8090
+
+CMD ["sh", "-c", "exec pocketbase serve --http=0.0.0.0:${PORT:-8090} --dir=/app/pb_data --migrationsDir=/app/pb_migrations --hooksDir=/app/pb_hooks"]
