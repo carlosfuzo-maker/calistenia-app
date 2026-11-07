@@ -212,7 +212,7 @@ function ExerciseList({ workout, compactOnly = false }: { workout: Workout | nul
 }
 
 function weekdayOf(date: string, locale: string): string {
-  return new Date(`${date}T12:00:00`).toLocaleDateString(locale, { weekday: 'long' })
+  return new Date(`${date}T12:00:00`).toLocaleDateString(locale.startsWith('es') ? 'es' : 'pt-BR', { weekday: 'long' })
 }
 
 function focusOfDay(t: (k: string) => string, weekDays: readonly WeekDay[], dayId: string): string {

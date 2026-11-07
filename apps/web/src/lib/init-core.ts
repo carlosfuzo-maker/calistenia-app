@@ -48,8 +48,8 @@ initCore({
   // Estado de una sola sesión (snapshot de carrera): F5 lo conserva, cerrar la pestaña no.
   sessionStorage,
   env: {
-    // Vacío en prod → la web se sirve desde el propio PocketBase
-    pbUrl: import.meta.env.VITE_POCKETBASE_URL || (import.meta.env.DEV ? 'http://127.0.0.1:8090' : window.location.origin),
+    // Vacío en prod o dev con proxy → window.location.origin permite acceso desde cualquier dispositivo (tablet/móvil/túnel)
+    pbUrl: import.meta.env.VITE_POCKETBASE_URL || (typeof window !== 'undefined' ? window.location.origin : 'http://127.0.0.1:8090'),
     // Vacío en dev → el proxy de Vite maneja /api/*
     aiApiUrl: import.meta.env.VITE_AI_API_URL || (import.meta.env.DEV ? '' : 'https://gym-server.guille.tech'),
     isDev: import.meta.env.DEV,

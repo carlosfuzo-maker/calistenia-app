@@ -90,7 +90,7 @@ export default function DashboardPage({ cardioLastSession }: DashboardPageProps)
     [userId, milestoneDismissed, streak],
   )
 
-  const todayLabel = new Date().toLocaleDateString(i18n.language, { weekday: 'long', day: 'numeric', month: 'long' })
+  const todayLabel = new Date().toLocaleDateString(i18n.language.startsWith('es') ? 'es' : 'pt-BR', { weekday: 'long', day: 'numeric', month: 'long' })
   const showParaTi = !!userId && paraTiEnabled({ homeKind: state.kind, accountSessions }) && !state.modifiers.loading
   const deload = state.kind === 'training_day' && state.deload
   const firstWorkout = state.kind === 'first_workout'

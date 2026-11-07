@@ -62,7 +62,7 @@ export function HeroPhone() {
 /** Panel de librería: amplitud + variantes por nivel sin repetir la pantalla del hero. */
 export function LibraryPanel() {
   const { t, i18n } = useTranslation()
-  const exerciseCount = i18n.language.startsWith('es') ? '1.578' : '1,578'
+  const exerciseCount = '1.578'
   const rows: Array<[string, number]> = [
     [t('landing.mockExercise1'), 1],
     [t('landing.mockExercise2'), 2],

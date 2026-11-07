@@ -21,8 +21,6 @@ export default function AuthPage({ signInWithGoogle, signInWithEmail, signUpWith
   const [password, setPassword] = useState('')
   const [displayName, setDisplayName] = useState('')
 
-  // Capture ?ref= and ?challenge= query params to localStorage — useAuth
-  // consumes them post-auth (referral tracking + express-challenge join, #313)
   useEffect(() => {
     const ref = searchParams.get('ref')
     if (ref) captureReferralCode(ref)
@@ -30,25 +28,21 @@ export default function AuthPage({ signInWithGoogle, signInWithEmail, signUpWith
     if (challenge) captureChallengeId(challenge)
   }, [searchParams])
 
-  // #636 §4: la pantalla de acceso no emitía nada, así que el embudo de
-  // registro empezaba en `signup_completed` y no había denominador para nada.
   useEffect(() => {
     trackCanonicalEvent(CANONICAL_ANALYTICS_EVENTS.authViewed, {
       surface: 'auth', source: 'auth_page',
       mode: initialMode,
-      // Solo si venía con invitación o reto, NO el código: es un identificador
-      // que apunta a otra persona (§6).
       has_referral: !!searchParams.get('ref'),
       has_challenge: !!searchParams.get('challenge'),
     })
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps -- una vista por visita
+  }, [])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (mode === 'login') {
-      signInWithEmail(email, password)
+      await signInWithEmail(email, password)
     } else {
-      signUpWithEmail(email, password, displayName)
+      await signUpWithEmail(email, password, displayName)
     }
   }
 

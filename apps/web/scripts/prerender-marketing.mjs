@@ -31,10 +31,10 @@ const LOCALES = {
     image: '/og.png',
   },
   en: {
-    lang: 'en',
-    locale: 'en_US',
-    title: 'Calistenia — Start from zero. Keep going.',
-    description: 'Guided workouts, AI-powered nutrition, a smart pantry and real progress. Available for Android and the web.',
+    lang: 'pt-BR',
+    locale: 'pt_BR',
+    title: 'Calistenia — Comece do zero. Continue avançando.',
+    description: 'Treinos guiados, nutrição com IA, despensa inteligente e progresso real. Disponível para Android e na web.',
     image: '/og-en.png',
   },
 }

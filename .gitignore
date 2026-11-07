@@ -21,6 +21,7 @@ pb_data_local/
 
 # PocketBase binary — large (~32MB), platform-specific, download from pocketbase.io
 pocketbase
+pocketbase.exe
 
 # macOS metadata
 .DS_Store

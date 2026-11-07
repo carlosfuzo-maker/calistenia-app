@@ -28,7 +28,7 @@ interface HomeWeekStripProps {
 }
 
 function dayName(cell: WeekCell, locale: string, style: 'narrow' | 'short' | 'long'): string {
-  const label = new Date(`${cell.day}T12:00:00`).toLocaleDateString(locale, { weekday: style })
+  const label = new Date(`${cell.day}T12:00:00`).toLocaleDateString(locale.startsWith('es') ? 'es' : 'pt-BR', { weekday: style })
   return label.charAt(0).toUpperCase() + label.slice(1).replace('.', '')
 }
 
@@ -182,7 +182,7 @@ function MissedDaysNote({ week, locale }: { week: WeekSummary; locale: string })
       {t('home.week.missed', {
         count: note.days.length,
         // Sin `dayName`: aquí va dentro de una frase («el lunes»), no como etiqueta.
-        day: new Date(`${note.latest.day}T12:00:00`).toLocaleDateString(locale, { weekday: 'long' }),
+        day: new Date(`${note.latest.day}T12:00:00`).toLocaleDateString(locale.startsWith('es') ? 'es' : 'pt-BR', { weekday: 'long' }),
       })}
     </p>
   )

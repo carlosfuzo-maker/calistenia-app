@@ -20,7 +20,7 @@ interface ApkRelease {
 
 function formatDate(iso: string): string {
   try {
-    return new Date(iso).toLocaleDateString('es', { year: 'numeric', month: 'long', day: 'numeric' })
+    return new Date(iso).toLocaleDateString('pt-BR', { year: 'numeric', month: 'long', day: 'numeric' })
   } catch {
     return iso
   }
@@ -85,15 +85,15 @@ export default function DownloadPage() {
           onClick={() => navigate('/')}
           className="mb-8 text-sm text-muted-foreground hover:text-foreground transition-colors"
         >
-          &larr; Volver
+          &larr; Voltar
         </button>
 
         <div className="flex flex-col items-center text-center">
           <img src="/logo.png" alt="" className="w-20 h-20 rounded-2xl mb-6" />
-          <h1 className="text-3xl font-bold mb-2">Descarga Calistenia para Android</h1>
+          <h1 className="text-3xl font-bold mb-2">Baixe o Calistenia para Android</h1>
           <p className="text-muted-foreground max-w-md">
-            Instala la app directamente en tu teléfono. Entrenamientos, nutrición y
-            seguimiento de progreso, también sin conexión.
+            Instale o app diretamente no seu celular. Treinos, nutrição e
+            acompanhamento de progresso, também sem conexão.
           </p>
         </div>
 
@@ -101,7 +101,7 @@ export default function DownloadPage() {
           {status === 'loading' && (
             <div className="flex items-center justify-center gap-3 py-8 text-muted-foreground">
               <Loader2 className="w-5 h-5 animate-spin" />
-              <span>Buscando la última versión…</span>
+              <span>Buscando a versão mais recente…</span>
             </div>
           )}
 
@@ -109,11 +109,11 @@ export default function DownloadPage() {
             <div className="flex flex-col items-center gap-4 py-6 text-center">
               <AlertCircle className="w-8 h-8 text-muted-foreground" />
               <p className="text-muted-foreground">
-                No pudimos cargar la última versión automáticamente.
+                Não foi possível carregar a versão mais recente automaticamente.
               </p>
               <Button asChild variant="outline">
                 <a href={RELEASES_PAGE} target="_blank" rel="noreferrer">
-                  Ver todas las versiones en GitHub
+                  Ver todas as versões no GitHub
                 </a>
               </Button>
             </div>
@@ -124,21 +124,21 @@ export default function DownloadPage() {
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <Smartphone className="w-4 h-4" />
                 <span>
-                  Versión {release.version} · {release.sizeMb} MB · {formatDate(release.publishedAt)}
+                  Versão {release.version} · {release.sizeMb} MB · {formatDate(release.publishedAt)}
                 </span>
               </div>
 
               <Button asChild size="lg" className="w-full sm:w-auto">
                 <a href={release.downloadUrl}>
                   <Download className="w-5 h-5" />
-                  Descargar APK
+                  Baixar APK
                 </a>
               </Button>
 
               {release.notes && (
                 <details className="w-full text-left mt-2">
                   <summary className="cursor-pointer text-sm text-muted-foreground hover:text-foreground transition-colors">
-                    Novedades de esta versión
+                    Novidades desta versão
                   </summary>
                   <pre className="mt-3 whitespace-pre-wrap break-words rounded-lg bg-muted/50 p-4 text-sm text-muted-foreground">
                     {release.notes}
@@ -153,26 +153,26 @@ export default function DownloadPage() {
         <div className="mt-10">
           <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
             <ShieldCheck className="w-5 h-5 text-muted-foreground" />
-            Cómo instalar
+            Como instalar
           </h2>
           <ol className="space-y-3 text-sm text-muted-foreground">
             <li className="flex gap-3">
               <span className="font-bold text-foreground">1.</span>
-              Descarga el archivo APK con el botón de arriba.
+              Baixe o arquivo APK pelo botão acima.
             </li>
             <li className="flex gap-3">
               <span className="font-bold text-foreground">2.</span>
-              Abre el archivo descargado. Android te pedirá permitir la instalación
-              desde esta fuente — activa <strong className="text-foreground">"Permitir de esta fuente"</strong>.
+              Abra o arquivo baixado. O Android solicitará permissão para instalar
+              a partir desta fonte — ative <strong className="text-foreground">"Permitir desta fonte"</strong>.
             </li>
             <li className="flex gap-3">
               <span className="font-bold text-foreground">3.</span>
-              Toca <strong className="text-foreground">Instalar</strong> y abre la app. ¡Listo!
+              Toque em <strong className="text-foreground">Instalar</strong> e abra o app. Pronto!
             </li>
           </ol>
           <p className="mt-6 text-xs text-muted-foreground">
-            La app no está en Google Play todavía, por eso se instala como APK. Es
-            seguro: el archivo se publica desde nuestro repositorio oficial en GitHub.
+            O app ainda não está na Google Play Store, por isso é instalado como APK. É
+            seguro: o arquivo é publicado diretamente a partir do nosso repositório oficial no GitHub.
           </p>
         </div>
       </div>

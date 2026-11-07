@@ -197,7 +197,7 @@ export function PublicHeader({ onGetStarted }: { onGetStarted?: () => void }) {
             <Link key={link.to} to={link.to} className={linkClass}>{link.label}</Link>
           ))}
           <button type="button" onClick={switchLanguage} className={linkClass} aria-label={t('profile.language')}>
-            {activeLocale === 'en' ? 'ES' : 'EN'}
+            {activeLocale === 'en' ? 'ES' : 'PT'}
           </button>
           {webCta(`inline-flex items-center gap-1.5 ${linkClass}`)}
         </nav>
@@ -223,7 +223,7 @@ export function PublicHeader({ onGetStarted }: { onGetStarted?: () => void }) {
             <Link key={link.to} to={link.to} className={`px-3 py-2.5 ${linkClass}`}>{link.label}</Link>
           ))}
           <button type="button" onClick={switchLanguage} className={`px-3 py-2.5 text-left ${linkClass}`} aria-label={t('profile.language')}>
-            {activeLocale === 'en' ? 'ES' : 'EN'}
+            {activeLocale === 'en' ? 'ES' : 'PT'}
           </button>
           {webCta(`inline-flex items-center gap-1.5 border-t border-white/10 px-3 py-2.5 text-left ${linkClass}`)}
         </nav>
