@@ -15,30 +15,25 @@ import { shouldSendAnalytics } from '@calistenia/core/lib/analytics'
 const replayEnabled =
   !import.meta.env.DEV && typeof navigator !== 'undefined' && !navigator.webdriver
 
-const op = new OpenPanel({
-  apiUrl: 'https://openpanel.guille.tech/api',
-  clientId: import.meta.env.VITE_OPENPANEL_CLIENT_ID ?? '95f75c3f-fb38-4c0b-a401-a3a63f8b91f5',
-  trackScreenViews: true,
-  trackOutgoingLinks: true,
-  trackAttributes: true,
-  // #696: la cuenta demo del revisor de Play no cuenta. El filtro corre antes
-  // de encolar cualquier payload (track, screen_view automático, identify,
-  // replay), así que no hace falta gatear cada llamada.
-  filter: shouldSendAnalytics,
-  sessionReplay: {
-    enabled: replayEnabled,
-    // maskAllText y maskAllInputs quedan en su default (true): la app maneja datos
-    // de salud (peso, lesiones, condiciones médicas, comidas) y no deben salir del
-    // navegador. Solo se desenmascara lo que marque `data-op-unmask`, que hoy son
-    // las páginas públicas de marketing (ver components/MarketingUnmask.tsx).
-    unmaskTextSelector: '[data-op-unmask]',
-  },
-})
+const openPanelClientId = import.meta.env.VITE_OPENPANEL_CLIENT_ID
 
-// Lightweight health check — logs to console if analytics endpoint is unreachable.
-// Runs once on load so you know if ad blockers or network issues are silently dropping events.
-if (typeof window !== 'undefined') {
-  fetch('https://openpanel.guille.tech/api', { method: 'HEAD', mode: 'no-cors' }).catch(() => {
+const op = openPanelClientId
+  ? new OpenPanel({
+      apiUrl: import.meta.env.VITE_OPENPANEL_API_URL || 'https://openpanel.guille.tech/api',
+      clientId: openPanelClientId,
+      trackScreenViews: true,
+      trackOutgoingLinks: true,
+      trackAttributes: true,
+      filter: shouldSendAnalytics,
+      sessionReplay: {
+        enabled: replayEnabled,
+        unmaskTextSelector: '[data-op-unmask]',
+      },
+    })
+  : null
+
+if (openPanelClientId && typeof window !== 'undefined') {
+  fetch(import.meta.env.VITE_OPENPANEL_API_URL || 'https://openpanel.guille.tech/api', { method: 'HEAD', mode: 'no-cors' }).catch(() => {
     console.warn('[analytics] OpenPanel endpoint unreachable — events may be blocked by ad blocker or network issue')
   })
 }
@@ -61,10 +56,10 @@ initCore({
     client: { version: __APP_VERSION__, build: 0, platform: 'web' },
   },
   analytics: {
-    track: (name, properties) => op.track(name, properties),
+    track: (name, properties) => op?.track(name, properties),
     // El payload del facade es laxo; OpenPanel exige profileId — los callers de core siempre lo mandan.
     identify: (payload) => {
-      op.identify(payload as Parameters<typeof op.identify>[0])
+      op?.identify(payload as Parameters<typeof op.identify>[0])
       // Cruce OpenPanel↔Sentry: el mismo id de PocketBase en los dos lados.
       // Sin esto Sentry solo tiene la IP y cruzar una sesión del panel con un
       // issue era «mismo dispositivo + misma hora». Solo el id, nada de PII.
@@ -72,7 +67,7 @@ initCore({
       if (profileId) Sentry.setUser({ id: profileId })
     },
     clear: () => {
-      op.clear()
+      op?.clear()
       Sentry.setUser(null)
     },
   },
