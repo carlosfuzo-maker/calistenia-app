@@ -107,3 +107,5 @@ ds-bundle/
 apps/web/.ds-entry.css
 apps/web/.ds-compiled.css
 apps/web/ds-types/
+.vercel
+.env*

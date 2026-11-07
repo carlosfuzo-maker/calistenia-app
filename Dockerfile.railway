@@ -28,3 +28,4 @@ ENV PORT=8090
 EXPOSE 8090
 
 CMD ["sh", "-c", "exec pocketbase serve --http=0.0.0.0:${PORT:-8090} --dir=/app/pb_data --migrationsDir=/app/pb_migrations --hooksDir=/app/pb_hooks"]
+
