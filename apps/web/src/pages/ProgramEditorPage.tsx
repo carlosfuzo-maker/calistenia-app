@@ -269,7 +269,7 @@ export default function ProgramEditorPage({ userId, userRole = 'user' }: Program
               disabled={state.isSaving}
               className="font-bebas text-lg tracking-wide"
             >
-              {state.isSaving ? 'GUARDANDO...' : 'GUARDAR'}
+              {state.isSaving ? 'SALVANDO...' : t('common.save', 'SALVAR').toUpperCase()}
             </Button>
           )}
         </div>

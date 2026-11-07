@@ -16,7 +16,7 @@ import { Input } from '../ui/input'
 import { Textarea } from '../ui/textarea'
 import { Card, CardContent } from '../ui/card'
 import { Badge } from '../ui/badge'
-import { DAY_IDS, PRIORITY_OPTIONS } from './constants'
+import { DAY_IDS, DAY_SHORT_LABELS, PRIORITY_OPTIONS } from './constants'
 import { CopyToDialog, type CopyTargetOption } from './CopyToDialog'
 import { ExerciseMediaEditor } from './ExerciseMediaEditor'
 
@@ -97,7 +97,7 @@ export function StepExercises({
 
   return (
     <div className="space-y-4">
-      <div className="font-bebas text-2xl tracking-wide mb-2">EJERCICIOS</div>
+      <div className="font-bebas text-2xl tracking-wide mb-2">{t('programEditor.stepExercises', 'EXERCÍCIOS').toUpperCase()}</div>
 
       {/* Phase tabs */}
       <div className="flex gap-1.5 flex-wrap">
@@ -134,7 +134,7 @@ export function StepExercises({
               onClick={() => onSelectDayId(dayId)}
               className="h-8 px-2.5 text-[10px] tracking-wide"
             >
-              {dayId.toUpperCase()}
+              {DAY_SHORT_LABELS[dayId] ?? dayId.toUpperCase()}
               {exerciseCount > 0 && (
                 <span className={cn('ml-1 text-[9px]', isActive ? 'text-black/60' : 'text-muted-foreground')}>
                   ({exerciseCount})

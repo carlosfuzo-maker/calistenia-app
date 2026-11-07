@@ -44,3 +44,13 @@ export const PRIORITY_OPTIONS: { value: 'high' | 'med' | 'low'; i18nKey: string;
 ]
 
 export const DAY_IDS = ['lun', 'mar', 'mie', 'jue', 'vie', 'sab', 'dom']
+
+export const DAY_SHORT_LABELS: Record<string, string> = {
+  lun: 'SEG',
+  mar: 'TER',
+  mie: 'QUA',
+  jue: 'QUI',
+  vie: 'SEX',
+  sab: 'SÁB',
+  dom: 'DOM',
+}
